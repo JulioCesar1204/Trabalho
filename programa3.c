@@ -1,108 +1,105 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <locale.h>
+#define TAM 20
 
 
-typedef struct Pilha{
-    int valor;
-    struct Pilha *proxValor;
-}Pilha;
-
-typedef Pilha *ConsPilha;
-void exibir(ConsPilha base){
-    ConsPilha p;
-    p=base;
-    while (p!= NULL){
-        printf("%8d",(*p).valor);
-        p = (*p).proxValor;
-
+void exibir (int *vet, int qtElementos){
+    printf("Elementos da pilha:\n");
+    for (int i = 0 ; i < qtElementos; i++ ){
+        printf("(%i) Elemento da Pillha: %i \n",i+1,vet[i]);
     }
     printf("\n");
+
 }
-ConsPilha push (int valor, ConsPilha base){
-    ConsPilha p;
+void push (int *vet, int valor, int *qtElementos){
 
-    p = (ConsPilha)malloc(sizeof(Pilha));
-   (*p).valor = valor;
-   (*p).proxValor = base;
-   base = p;
-return base;
-}
-
-ConsPilha pop (ConsPilha base){
-    ConsPilha p;
-
-    if (base == NULL){
-        return NULL;
-    } else {
-        p = (*base).proxValor;
-        free(base);
-        base = p;
+    if(*qtElementos==TAM){
+            return printf("Você nao pode inserir mais valores, pois a lista está cheia.");
     }
-    return base;
-}
-
-
-
-ConsPilha consulta (int valor, ConsPilha base){
-    ConsPilha p;
-    p = base;
-
-    if (base == NULL){
-        printf("Lista Vazia!\n");
-        return base;
-    } else {
-        while ( p != NULL){
-            if ((*p).valor == valor){
-               printf("Valor encontrado na pilha\n");
-               return base;
-            }
-            else{
-                p=(*p).proxValor;
-            }
+    else{
+        vet[*qtElementos]=valor;
+        *qtElementos= *qtElementos+1;
     }
-        printf("Valor não encontrado na pilha\n");
-        return base;
+    printf("Operação push feita com sucesso!\n",valor);
+
+
 }
+void pop (int *vet, int *qtElementos){
+    
+        vet[*qtElementos-1] = NULL;
+        *qtElementos=*qtElementos-1;
+    printf("Operação pop feita com sucesso! \n");
+    printf("\n");
+    }
+
+void consulta(int vet[], int qtElementos, int valor){
+  for (int i=0; i < qtElementos; i++){
+    if(vet[i]==valor){
+        printf("Valor encontrado na pilha, no índice %i",i);
+        return 1;
+        
+    }
+  }
+  printf("Valor nao encontrado na pilha. \n");
+  return ;
+
 }
 
 int main()
 {
-    ConsPilha base = NULL;
-    int x;
+    int *vet;
+    int qtElementos;
     int opcao;
+    int x;
+    
+    printf("Digite o tamanaho da pilha (máximo 20 elementos): \n");
+    scanf("%i",&qtElementos);
+    while(qtElementos>20){
+        printf("Tamanho digitado acima do permitido\n");
+        scanf("%i",&qtElementos);
+    }
+    vet = (int *) malloc(qtElementos *sizeof(int));
 
+    printf("Digite os valores da pilha \n");
+    for(int i=0;i<qtElementos;i++){
+    printf("Digite o elemento numero %i da pilha: \n",i+1);
+    scanf("%i",&vet[i]);
+    }
+
+
+    system("cls");
+    printf("Pilha criada. Agora a pilha possui %i elementos \n", qtElementos);
     printf("\nEscolha a operação\n");
     printf("0 - Encerrar o programa\n");
     printf("1 - Exibir todos os elementos da pilha\n");
     printf("2 - Operaçao Push\n");
     printf("3 - Operaçao Pop\n");
-    printf("4 - Operaçao de Consulta\n");
+    printf("4 - Operaçao Consulta\n");
+
+
+
 
     scanf("%i",&opcao);
 
     while (opcao!= 0){
-
-
     switch (opcao){
         case 1:
-        exibir(base);
+        exibir(vet, qtElementos);
         break;
         case 2:
         printf("Digite o valor que deseja inserir na Pilha\n");
         scanf("%i",&x);
-        base = push(x, base);
+        push(vet, x, &qtElementos);
         break;
         case 3:
-        base = pop(base);
+        pop(vet,&qtElementos);
         break;
         case 4:
         printf("Digite o número que pretende pesquisar\n");
         scanf("%i",&x);
-        base = consulta(x, base);
+        consulta(vet,qtElementos, x);
         break;
 }
-
     printf("\n");
     system("pause");
     printf("\n");
@@ -112,10 +109,10 @@ int main()
     printf("2 - Operaçao Push\n");
     printf("3 - Operaçao Pop\n");
     printf("4 - Operaçao de Consulta\n");
-'   scanf("%i",&opcao);
+    scanf("%i",&opcao);
     printf("\n");
     }
+
     return 0;
 }
-
  
