@@ -117,43 +117,38 @@ void listar(NohPtr inicio)
 int main()
 {
     NohPtr inicio = NULL;
+    int numero;
     int opcao = -1;
     while (opcao != 0)
     {
         opcao = 0;
-        printf("Escolha a operação: \n");
+        printf("\n\nEscolha a operação: \n");
         printf("0 - Encerrar o programa\n");
         printf("1 - Exibir todos os elementos da lista\n");
         printf("2 - Inserir elemento\n");
         printf("3 - Remover elemento\n");
         printf(": ");
         scanf("\n%d", &opcao);
+        printf("\n\n");
 
         switch (opcao)
         {
         case 0:
             return 0;
-            break;
         case 1:
             printf("Lista: ");
             listar(inicio);
             break;
         case 2:
-        {
-            int numero;
             printf("Digite o numero a ser inserido: ");
             scanf("\n%d", &numero);
             inicio = inserir(numero, inicio);
             break;
-        }
         case 3:
-        {
-            int numero;
             printf("Digite o numero a ser removido: ");
             scanf("\n%d", &numero);
             inicio = retirar(numero, inicio);
             break;
-        }
         default:
             printf("Opcao invalida!\n\n");
             break;
