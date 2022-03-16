@@ -1,202 +1,244 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define vet 20
+#define TAMANHO_MAX 20
 
-int v[vet];
-
-void exibirElemento()
+void exibirElemento(int * vetor, int quantidadeElementos)
 {
-    int x;
-    x=0;
-    while(x<vet)
-    {
-        printf("v[%d] = %d \n", x, v[x]);
-        x++;
+
+    printf("\n\nExibindo a lista abaixo:\n", quantidadeElementos);
+    for (int i = 0 ; i < quantidadeElementos; i++ ){
+        printf("%i ",vetor[i]);
     }
+
+    printf("\n\n");
 }
 
-void inserirElemento(int elemento)
+int inserirElemento(int elemento, int * vetor, int quantidadeElementos)
 {
+
+    if (quantidadeElementos >= TAMANHO_MAX)
+    {
+        printf("\nO vetor está cheio");
+        return quantidadeElementos;
+    }
+
     int aux, aux2, i;
-    aux=v[0];
-    for(i=0;i<vet-1;i++)
-    {
-        aux2=aux;
-        aux=v[i+1];
-        v[i+1]=aux2;
+    aux = vetor[0];
+
+    if(quantidadeElementos == 0) {
+        vetor[0] = elemento;
+        printf("returning more");
+        return ++quantidadeElementos;
+
     }
-    v[0]=elemento;
+
+    else {
+        for (i = 0; i < quantidadeElementos; i++)
+        {
+            aux2 = aux;
+            aux = vetor[i + 1];
+            vetor[i + 1] = aux2;
+        }
+        vetor[0] = elemento;
+        return ++quantidadeElementos;
+    }
 }
 
-void removerElemento(int indice)
+int removerElemento(int indice, int *vetor, int quantidadeElementos)
 {
-    int i, aux, aux2;
-    aux=v[vet-1];
-    for(i=vet-1;i>indice;i--)
-    {
-        aux2=aux;
-        aux=v[i-1];
-        v[i-1]=aux2;
+    if(indice >= quantidadeElementos) {
+        printf("\n\nElemento nao existe\n\n");
+        return;
     }
 
-void buscarElemento(int elemento)
+    int i, aux, aux2;
+    aux = vetor[quantidadeElementos - 1];
+    for (i = quantidadeElementos - 1; i > indice; i--)
+    {
+        aux2 = aux;
+        aux = vetor[i - 1];
+        vetor[i - 1] = aux2;
+    }
+}
+
+void buscarElemento(int elemento, int* vetor, int quantidadeElementos)
 {
-    int x, y, menor, maior, meio;
+    int ul = 0;
+    for (int i = 0; i < quantidadeElementos - 1; i++)
+    {
+        if (vetor[i] > vetor[i + 1])
+        {
+            ul = ul + 1;
+        }
+    }
+
+    if (ul >= 1)
+    {
+        printf("O vetor está desordenado");
+        return;
+    }
+
+    int menor, maior, meio;
     menor=0;
-    maior=vet-1;
-    x=0;
-    while(x<vet-1)
+    maior=quantidadeElementos-1;
+    while(menor<=maior)
     {
-        if(v[x]>v[x+1])
+        meio=(maior+menor)/2;
+        if(elemento==vetor[meio])
         {
-            printf("O vetro nao esta ordenado");
-            x=vet;
-            y=1;
-        }
-        x++;
-    if(y=1)
-    {
-        }
-        while(menor<=maior)
+            printf("O valor desejado esta na posicao %d", meio);
+        }else
         {
-            meio=(maior+menor)/2;
-            if(elemento==v[meio])
+            if(elemento<vetor[meio])
             {
-                printf("O valor desejado esta na posicao %d", meio);
+                maior=meio-1;
             }else
             {
-                if(elemento<v[meio])
-                {
-                    maior=meio-1;
-                }else
-                {
-                    menor=meio+1;
-                }
+                menor=meio+1;
             }
+        }
     }
     if(meio=!elemento)
     {
         printf("O valor desejado nao se encontra no vetor");
     }
-    }
 }
 
-void ordenarListaPorInsercao()
+void ordenarListaPorSelecao(int *vetor, int quantidadeElementos)
 {
     int i, j, aux;
-    for(i=0;i<vet-1;i++)
+    for (i = 0; i < quantidadeElementos - 1; i++)
     {
-        j=i;
-        while((j>0)&&(v[j-1]>v[j]))
+        j = i;
+        while ((j > 0) && (vetor[j - 1] > vetor[j]))
         {
-            aux=v[j-1];
-            v[j-1]=v[j];
-            v[j]=aux;
-            j=j-1;
+            aux = vetor[j - 1];
+            vetor[j - 1] = vetor[j];
+            vetor[j] = aux;
+            j = j - 1;
         }
     }
 }
 
-void selectionSort(int vetor[], int qtdelementos){
-    int i,j,min,aux;
-    for (i = 0; i < (qtdelementos - 1); i++) {
-        min=i;
-        for (j= i+1; j< qtdelementos;j++){
-            if(vetor[j]<vetor[min]){
-                min=j;
+void selectionSort(int vetor[], int qtdelementos)
+{
+    int i, j, min, aux;
+    for (i = 0; i < (qtdelementos - 1); i++)
+    {
+        min = i;
+        for (j = i + 1; j < qtdelementos; j++)
+        {
+            if (vetor[j] < vetor[min])
+            {
+                min = j;
             }
         }
-        if(i != min){
+        if (i != min)
+        {
             aux = vetor[i];
-            vetor[i]=vetor[min];
-            vetor[min]=aux;
+            vetor[i] = vetor[min];
+            vetor[min] = aux;
         }
     }
 }
 
-void merge(int vetor[], int comeco, int meio, int fim) {
+void merge(int vetor[], int comeco, int meio, int fim)
+{
 
-    int com1 = comeco, com2 = meio+1, comAux = 0, tam = fim-comeco+1;
+    int com1 = comeco, com2 = meio + 1, comAux = 0, tam = fim - comeco + 1;
     int *vetAux;
-    vetAux = (int*)malloc(tam * sizeof(int));
+    vetAux = (int *)malloc(tam * sizeof(int));
 
-    while(com1 <= meio && com2 <= fim){
-        if(vetor[com1] < vetor[com2]) {
+    while (com1 <= meio && com2 <= fim)
+    {
+        if (vetor[com1] < vetor[com2])
+        {
             vetAux[comAux] = vetor[com1];
             com1++;
-        } else {
+        }
+        else
+        {
             vetAux[comAux] = vetor[com2];
             com2++;
         }
         comAux++;
     }
 
-    while(com1 <= meio){
+    while (com1 <= meio)
+    {
         vetAux[comAux] = vetor[com1];
         comAux++;
         com1++;
     }
 
-    while(com2 <= fim) {
+    while (com2 <= fim)
+    {
         vetAux[comAux] = vetor[com2];
         comAux++;
         com2++;
     }
 
-    for(comAux = comeco; comAux <= fim; comAux++){
-        vetor[comAux] = vetAux[comAux-comeco];
+    for (comAux = comeco; comAux <= fim; comAux++)
+    {
+        vetor[comAux] = vetAux[comAux - comeco];
     }
-
-
 }
-void mergeSort(int vetor[], int comeco, int fim)/*passar a qtdelementos-1*/{
-    if (comeco < fim) {
-        int meio = (fim+comeco)/2;
+
+void mergeSort(int vetor[], int comeco, int fim)
+{
+    if (comeco < fim)
+    {
+        int meio = (fim + comeco) / 2;
 
         mergeSort(vetor, comeco, meio);
-        mergeSort(vetor, meio+1, fim);
+        mergeSort(vetor, meio + 1, fim);
         merge(vetor, comeco, meio, fim);
     }
 }
 
-int main() {
-     int operacao, elemento, indice, busca;
+int main()
+{
+
+    int quantidadeElementos = 0;
+    int *vetor;
+
+    int operacao, elemento, indice, busca;
     do
     {
         printf("digite a operacao que deseja realizar:\n1 - Exibir todos os elementos da lista\n2 - Inserir elemento no inicio da lista\n4 - Remover elemento\n5 - Buscar elemento\n6 - Ordenar lista");
-        scanf("%d", operacao);
-        switch(operacao)
+        printf("\n: ");
+        scanf("%d", &operacao);
+        switch (operacao)
         {
-            case 1:
-                exibirElemento();
-                break;
-            case 2:
-                printf("Digite um numero:");
-                scanf("%d", elemento);
-                inserirElemento(elemento);
-                break;
-            case 4:
-                printf("Digite o indice do elemento que deseja remover", indice);
-                removerElemento(indice);
-                break;
-            case 5:
-                printf("Digite o elemento que esta buscando");
-                scanf("%d", busca);
-                buscarElemento(busca);
-                break;
-            case 6:
-                ordenarListaPorInsercao();
-                break;
-            case 7:
-                selectionSort(v, vet);
-                break
-            default:
-                printf("Digite um numero valido:");
-                scanf("%d", operacao);
+        case 1:
+            exibirElemento(vetor, quantidadeElementos);
+            break;
+        case 2:
+            printf("Digite um numero:");
+            scanf("%d", &elemento);
+            quantidadeElementos = inserirElemento(elemento, vetor, quantidadeElementos);
+            break;
+        case 4:
+            printf("Digite o indice do elemento que deseja remover", indice);
+            scanf("%d", &indice);
+            removerElemento(indice, vetor, quantidadeElementos);
+            break;
+        case 5:
+            printf("Digite o elemento que esta buscando: ");
+            scanf("%d", busca);
+            buscarElemento(busca, vetor, quantidadeElementos);
+            break;
+        case 6:
+            ordenarListaPorInsercao();
+            break;
+        case 7:
+            selectionSort(vetor, quantidadeElementos);
+            break;
+        default:
+            printf("Digite um numero valido:");
+            scanf("%d", &operacao);
         }
-    }
-    while(operacao=!0);
+    } while (operacao != 0);
     return 0;
 }
-
