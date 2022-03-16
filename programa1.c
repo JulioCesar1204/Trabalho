@@ -42,29 +42,43 @@ void removerElemento(int indice)
 
 void buscarElemento(int elemento)
 {
-    int menor, maior, meio;
+    int x, y, menor, maior, meio;
     menor=0;
     maior=vet-1;
-    while(menor<=maior)
+    x=0;
+    while(x<vet-1)
     {
-        meio=(maior+menor)/2;
-        if(elemento==v[meio])
+        if(v[x]>v[x+1])
         {
-            printf("O valor desejado esta na posicao %d", meio);
-        }else
+            printf("O vetro nao esta ordenado");
+            x=vet;
+            y=1;
+        }
+        x++;
+    if(y=1)
+    {
+        }
+        while(menor<=maior)
         {
-            if(elemento<v[meio])
+            meio=(maior+menor)/2;
+            if(elemento==v[meio])
             {
-                maior=meio-1;
+                printf("O valor desejado esta na posicao %d", meio);
             }else
             {
-                menor=meio+1;
+                if(elemento<v[meio])
+                {
+                    maior=meio-1;
+                }else
+                {
+                    menor=meio+1;
+                }
             }
-        }
     }
     if(meio=!elemento)
     {
         printf("O valor desejado nao se encontra no vetor");
+    }
     }
 }
 
