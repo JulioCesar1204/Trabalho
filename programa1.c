@@ -206,7 +206,7 @@ int main()
     int operacao, elemento, indice, busca;
     do
     {
-        printf("digite a operacao que deseja realizar:\n1 - Exibir todos os elementos da lista\n2 - Inserir elemento no inicio da lista\n4 - Remover elemento\n5 - Buscar elemento\n6 - Ordenar lista");
+        printf("digite a operacao que deseja realizar:\n1 - Exibir todos os elementos da lista\n2 - Inserir elemento no inicio da lista\n4 - Remover elemento\n5 - Buscar elemento\n6 - Ordenar lista\n7-Ordenar por MwrgeSort");
         printf("\n: ");
         scanf("%d", &operacao);
         switch (operacao)
