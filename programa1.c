@@ -230,7 +230,7 @@ int main()
             buscarElemento(busca, vetor, quantidadeElementos);
             break;
         case 6:
-            ordenarListaPorInsercao();
+            ordenarListaPorInsercao(vetor, quantidadeElementos);
             break;
         case 7:
             selectionSort(vetor, quantidadeElementos);
