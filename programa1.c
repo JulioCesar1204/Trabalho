@@ -226,7 +226,7 @@ int main()
             break;
         case 5:
             printf("Digite o elemento que esta buscando: ");
-            scanf("%d", busca);
+            scanf("%d", &busca);
             buscarElemento(busca, vetor, quantidadeElementos);
             break;
         case 6:
