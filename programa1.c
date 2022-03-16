@@ -105,7 +105,7 @@ void buscarElemento(int elemento, int* vetor, int quantidadeElementos)
     }
 }
 
-void ordenarListaPorSelecao(int *vetor, int quantidadeElementos)
+void ordenarListaPorInsercao(int *vetor, int quantidadeElementos)
 {
     int i, j, aux;
     for (i = 0; i < quantidadeElementos - 1; i++)
